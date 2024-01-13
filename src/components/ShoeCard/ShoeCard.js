@@ -31,11 +31,14 @@ const ShoeCard = ({
       ? 'new-release'
       : 'default'
 
+
   return (
     <Link href={`/shoe/${slug}`}>
       <Wrapper>
         <ImageWrapper>
-          <Image alt="" src={imageSrc} />
+          <ImageOverflowGuard>
+            <Image alt="" src={imageSrc} />
+          </ImageOverflowGuard>
           {variant === 'on-sale' && <SaleFlag>Sale</SaleFlag>}
           {variant === 'new-release' && (
             <NewFlag>Just released!</NewFlag>
@@ -68,20 +71,34 @@ const ShoeCard = ({
   );
 };
 
-const Link = styled.a`
-  text-decoration: none;
-  color: inherit;
+const Wrapper = styled.article`
 `;
 
-const Wrapper = styled.article``;
+const Link = styled.a`
+    text-decoration: none;
+    color: inherit;
+`;
 
 const ImageWrapper = styled.div`
   position: relative;
 `;
 
+const ImageOverflowGuard = styled.div`
+  overflow: hidden;
+`
+
 const Image = styled.img`
   width: 100%;
   border-radius: 16px 16px 4px 4px;
+  @media (prefers-reduced-motion: no-preference) {
+    transition: transform 500ms;
+    transform-origin: bottom;
+
+    ${Link}:hover & {
+      transform: scale(1.1) translateY(10px);
+      transition: transform 200ms ease-out;
+    }
+  }
 `;
 
 const Row = styled.div`
@@ -121,10 +138,22 @@ const Flag = styled.div`
   font-weight: ${WEIGHTS.bold};
   color: var(--color-white);
   border-radius: 2px;
+  
+  @media (prefers-reduced-motion: no-preference) {
+    transition: transform 500ms;
+    
+    ${Link}:hover & {
+      transform: translateY(-20px);
+      transition: transform 300ms ease-out;
+      transition-delay: 100ms;
+    }
+  }
 `;
 
 const SaleFlag = styled(Flag)`
   background-color: var(--color-primary);
+  transition: transform 500ms;
+  
 `;
 const NewFlag = styled(Flag)`
   background-color: var(--color-secondary);
