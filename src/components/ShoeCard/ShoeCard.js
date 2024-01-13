@@ -85,17 +85,20 @@ const ImageWrapper = styled.div`
 
 const ImageOverflowGuard = styled.div`
   overflow: hidden;
+  border-radius: 16px 16px 4px 4px;
 `
 
 const Image = styled.img`
   width: 100%;
-  border-radius: 16px 16px 4px 4px;
+  display: block;
   @media (prefers-reduced-motion: no-preference) {
     transition: transform 500ms;
-    transform-origin: bottom;
+    transform-origin: 50% 75%;
+    will-change: transform;
 
-    ${Link}:hover & {
-      transform: scale(1.1) translateY(10px);
+    ${Link}:hover &, 
+    ${Link}:focus & {
+      transform: scale(1.1);
       transition: transform 200ms ease-out;
     }
   }
@@ -142,10 +145,11 @@ const Flag = styled.div`
   @media (prefers-reduced-motion: no-preference) {
     transition: transform 500ms;
     
-    ${Link}:hover & {
+    ${Link}:hover &,
+    ${Link}:focus & {
       transform: translateY(-20px);
       transition: transform 300ms ease-out;
-      transition-delay: 100ms;
+      transition-delay: 50ms;
     }
   }
 `;
